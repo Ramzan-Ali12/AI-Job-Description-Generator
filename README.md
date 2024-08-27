@@ -1,9 +1,8 @@
 # AI Job Description Generator
 # Overview
 The AI Job Description Generator is a Python-based web application developed using Django, LangChain, and OpenAI. This project leverages the power of Large Language Models (LLMs) to automatically generate tailored job descriptions based on specific requirements, streamlining the recruitment process and enhancing efficiency for HR teams and recruiters.
-![image](https://github.com/user-attachments/assets/9f073423-2ecd-4ecb-b7f1-8b07e1457bd8)
-![image](https://github.com/user-attachments/assets/c4b02411-a265-41b1-8677-0fafd96b15c9)
-
+![alt text](job_Restapi.png)
+![alt text](result_job_descriptino.png)
 # Features
 ### Customizable Job Descriptions:
 Generate detailed and specific job descriptions by providing relevant inputs such as job title, required skills, experience level, and more.

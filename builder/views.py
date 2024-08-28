@@ -36,7 +36,7 @@ class JobDescriptionView(APIView):
             validated_data = serializer.validated_data
             job_title = validated_data.get('job_title')
             company_name = validated_data.get('company_name')
-            company_overview = validated_data.get('company_overview', 'Default company overview')  # Default or fetched from a database
+            company_overview = validated_data.get('company_overview', 'Default company overview')  
             role_overview = validated_data.get('role_overview', f"As a {job_title}, you will be responsible for...")
             key_responsibilities = validated_data.get('key_responsibilities', "● Design, code, and test software applications in Python...")
             qualifications = validated_data.get('qualifications', "● Bachelor's degree in Computer Science or a related field...")

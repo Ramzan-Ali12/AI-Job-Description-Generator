@@ -15,8 +15,6 @@ Designed to be easily extendable with additional features or integrated with oth
 # Technology Stack
 ### Backend: Python, Django
 ### AI/ML: OpenAI API, LangChain
-### Frontend: Django Templates
-### Database: SQLite (default), can be configured to use PostgreSQL or any other relational database supported by Django.
 ### Environment Management: Virtualenv or Conda
 # Installation
 #### To set up the AI Job Description Generator locally, follow these steps:

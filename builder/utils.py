@@ -2,7 +2,6 @@ from langchain_openai import OpenAI  # Or the specific model you are using
 from django.conf import settings
 from pydantic import BaseModel, Field
 from langchain.output_parsers import PydanticOutputParser
-import getpass
 
 # Define the desired data structure for the job description
 class JobDescription(BaseModel):
@@ -35,22 +34,6 @@ def format_response(parsed_response: JobDescription):
     }
     return formatted_response
 
-def setup_langchain():
-    """
-    Initializes the language model with the OpenAI API key.
-    
-    Returns:
-        OpenAI: An instance of the OpenAI language model initialized with the API key.
-    
-    Raises:
-        EnvironmentError: If the 'OPENAI_API_KEY' is not found in the Django settings.
-    """
-    api_key = settings.OPENAI_API_KEY  # Fetch the API key from Django settings
-    if not api_key:
-        raise EnvironmentError("Missing 'OPENAI_API_KEY'. You must provide an API key.")
-
-    return OpenAI(api_key=api_key)  # Initialize the OpenAI model with the API key
-    
 def generate_job_description(
     job_title, company_name, company_overview, role_overview, 
     key_responsibilities, qualifications, why_work_with_us
@@ -72,7 +55,10 @@ def generate_job_description(
     """
     # Inatialize the llm
     try:
-        llm = setup_langchain()
+        api_key = settings.OPENAI_API_KEY  # Fetch the API key from Django settings
+        if not api_key:
+            raise EnvironmentError("Missing 'OPENAI_API_KEY'. You must provide an API key.")
+        llm = OpenAI(api_key=api_key)
     except AttributeError as e:
         print(f"Error fetching OpenAI API key: {e}")
         return {"error": str(e)}   

@@ -20,7 +20,6 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path("", home, name="home"),  # Add this line for the root URL
     path("admin/", admin.site.urls),
     path('api/', include('builder.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

@@ -1,28 +1,25 @@
 # job_description_builder/urls.py
 from django.contrib import admin
 from django.urls import path, include
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
-from rest_framework import permissions
-
-schema_view = get_schema_view(
-    openapi.Info(
-        title="Job Description Builder API",
-        default_version='v1',
-        description="Test description",
-        terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="support@example.com"),
-        license=openapi.License(name="BSD License"),
-    ),
-    public=True,
-    permission_classes=(permissions.AllowAny,),
-)
+from drf_spectacular.views import SpectacularAPIView
+from django.views.generic import TemplateView
 
 urlpatterns = [
+     # URL for generating the OpenAPI schema
+   path('openapi/', SpectacularAPIView.as_view(), name='openapi-schema'),
+
+    # URL for Swagger UI
+    path(
+        'swagger/',
+        TemplateView.as_view(
+            template_name='swagger-ui.html',
+            extra_context={'schema_url': 'openapi-schema'}
+        ),
+        name='swagger-ui'
+    ),
     path("admin/", admin.site.urls),
     path('api/', include('builder.urls')),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
 ]
 
 

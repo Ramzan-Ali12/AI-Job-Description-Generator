@@ -1,23 +1,29 @@
-# generator/views.py
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from drf_yasg.utils import swagger_auto_schema
 from .serializers import JobDescriptionSerializer
 from .utils import generate_job_description
+from drf_spectacular.utils import extend_schema, OpenApiResponse
 import logging
 
 # Set up logging
 logger = logging.getLogger(__name__)
 
+
 class JobDescriptionView(APIView):
     """
     API View to handle job description generation requests.
     """
-
-    @swagger_auto_schema(
-        request_body=JobDescriptionSerializer,
-        responses={200: 'Job description successfully generated.', 400: 'Invalid input data.'}
+    @extend_schema(
+        request=JobDescriptionSerializer,
+        responses={
+          200: OpenApiResponse(response={"job_description": "string"}, description="Job description generated successfully."),
+         400: OpenApiResponse(description="Bad Request due to invalid input."),
+         500: OpenApiResponse(description="Internal Server Error encountered during processing.")
+      },
+        description="Handle POST request to create a job description based on company name and job title.",
+        summary="Generate a job description",
+        tags=["Job Description"],
     )
     def post(self, request):
         """

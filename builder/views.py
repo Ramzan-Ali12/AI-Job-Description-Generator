@@ -4,7 +4,45 @@ from rest_framework import status
 from .serializers import JobDescriptionSerializer
 from .utils import generate_job_description
 from drf_spectacular.utils import extend_schema, OpenApiResponse
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+
 import logging
+
+# JWT api endpoints
+@extend_schema(
+    summary="Generate access and refresh tokens",
+    description="Takes a set of user credentials and returns an access and refresh JSON web token pair.",
+    tags=["jwt"],
+)
+class CustomTokenObtainPairView(TokenObtainPairView):
+    pass
+
+@extend_schema(
+    summary="Refresh access token",
+    description="Takes a valid refresh token and returns a new access token.",
+    tags=["jwt"],
+)
+class CustomTokenRefreshView(TokenRefreshView):
+    pass
+
+@extend_schema(
+    summary="Verify access token validity",
+    description="Verifies if a given token is valid.",
+    tags=["jwt"],
+)
+class CustomTokenVerifyView(TokenVerifyView):
+    pass
+
+
+
+
+
+
+
+
+
+
+
 
 # Set up logging
 logger = logging.getLogger(__name__)

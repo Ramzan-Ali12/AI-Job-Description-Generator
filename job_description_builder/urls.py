@@ -10,7 +10,7 @@ urlpatterns = [
 
     # URL for Swagger UI
     path(
-        'swagger/',
+        'docs/',
         TemplateView.as_view(
             template_name='swagger-ui.html',
             extra_context={'schema_url': 'openapi-schema'}
@@ -18,7 +18,7 @@ urlpatterns = [
         name='swagger-ui'
     ),
     path("admin/", admin.site.urls),
-    path('api/', include('builder.urls')),
+    path('api/v1/', include('builder.urls')),
 
 ]
 

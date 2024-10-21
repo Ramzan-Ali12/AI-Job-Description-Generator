@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "builder",
     "drf_spectacular",
-    "rest_framework_simplejwt"
+    "rest_framework_simplejwt",
+    "subscriptions",
     
 ]
 REST_FRAMEWORK = {
@@ -64,10 +65,12 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',  # Require authentication by default
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),  # Access token lifetime
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),  # Access token lifetime
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),    # Refresh token lifetime
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
@@ -161,3 +164,5 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Load the stripe secret key from the environment variable
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")

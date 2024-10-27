@@ -14,8 +14,11 @@ from subscriptions.serializers import CheckoutSessionSerializer, CheckoutSession
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from django.views import View
+
+
 stripe.api_key = settings.STRIPE_SECRET_KEY
-endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
+#endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
 
 
 @extend_schema(
@@ -26,6 +29,7 @@ endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
     tags=["subscriptions"],
     
 )
+
 class CreateCheckoutSessionView(APIView):
     serializer_class = CheckoutSessionSerializer
     permission_classes = [IsAuthenticated]
@@ -89,7 +93,6 @@ class CancelSubscriptionView(APIView):
         try:
             # Fetch the current authenticated user
             user = request.user
-            print("user----------->")
             # Assuming `subscription_id` is stored in the user model or in a related model
             if not hasattr(user, 'subscription_id') or not user.subscription_id:
                 return Response({'error': 'No subscription found for the current user'}, status=status.HTTP_400_BAD_REQUEST)
@@ -127,7 +130,6 @@ class ListProductsView(generics.ListAPIView):
     pagination_class = PageNumberPagination
 
 
-from django.views import View
 @method_decorator(csrf_exempt, name='dispatch')
 class StripeWebhookView(View):
     def post(self, request, *args, **kwargs):
